@@ -1,12 +1,10 @@
-
-## CITISQUARE CATALOG API SERVICE
-
+## NESTJS BOILERPLATER FOR MICRO SERVICE AND MONOLITHIC
 
 ## Running the app
 
 ```bash
 # Step 1.
-$ Create .env with your database connection url e.g DATABASE_CONNECTION=mongodb://catalog_mongodb/citisquare_catalog
+$ Create .env with your database connection url e.g DATABASE_CONNECTION=
 
 # Step 2.
 $ npm install
@@ -14,10 +12,6 @@ $ npm install
 # Step 3.
 $ docker-compose up --build
 
-
-## PS: Typeorm mongodb is the database driver
-
 # production mode
 # This will be ready soon
 ```
-

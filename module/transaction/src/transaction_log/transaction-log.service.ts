@@ -1,22 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { TransactionLog } from '../../schemas/transaction-log.entity';
-import { MongoRepository } from 'typeorm';
+import { AuthLog, AuthLogDocument } from '../../schemas/auth.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class TransactionLogService {
   constructor(
-    @InjectRepository(TransactionLog)
-    private readonly productModel: MongoRepository<TransactionLog>,
+    @InjectModel(AuthLog.name)
+    private AuthLogModel: Model<AuthLogDocument>,
   ) {}
 
   async getTransaction() {
-    return await this.productModel.find();
+    return await this.AuthLogModel.find().exec();
   }
 
-  async create() {
-    return await this.productModel.save({
+  async create(): Promise<AuthLog> {
+    const auth = new this.AuthLogModel({
       title: 'testing',
     });
+
+    return await auth.save();
   }
 }

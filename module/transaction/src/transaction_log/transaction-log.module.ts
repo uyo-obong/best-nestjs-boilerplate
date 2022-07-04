@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TransactionLogService } from './transaction-log.service';
 import { TransactionLogController } from './transaction-log.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { TransactionLog } from '../../schemas/transaction-log.entity';
+import { AuthLog, AuthLogSchema } from '../../schemas/auth.schema';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TransactionLog])],
+  imports: [
+    MongooseModule.forFeature([{ name: AuthLog.name, schema: AuthLogSchema }]),
+  ],
   providers: [TransactionLogService],
   controllers: [TransactionLogController],
 })

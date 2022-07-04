@@ -5,13 +5,13 @@ import { TransactionLogService } from './transaction-log.service';
 
 @Controller('transaction/log')
 export class TransactionLogController extends RestController {
-  constructor(private readonly userService: TransactionLogService) {
+  constructor(private readonly transactionLogService: TransactionLogService) {
     super();
   }
 
   @Get()
   async getProducts(@Res() res) {
-    const transaction = await this.userService.getTransaction();
+    const transaction = await this.transactionLogService.getTransaction();
     return res.success(
       await this.collection(transaction, new TransactionLogTransformer()),
     );
@@ -19,7 +19,7 @@ export class TransactionLogController extends RestController {
 
   @Post('create')
   async create(@Res() res) {
-    const transaction = await this.userService.create();
+    const transaction = await this.transactionLogService.create();
     return res.success(
       await this.transform(transaction, new TransactionLogTransformer()),
     );

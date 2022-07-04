@@ -1,20 +1,18 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TransactionLogModule } from './transaction/src/transaction_log/transaction-log.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
 
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      host: process.env.MONGODB_CONNECTION_HOST,
-      port: 27017,
-      database: process.env.MONGODB_DATABASE,
-      autoLoadEntities: true,
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
+    MongooseModule.forRootAsync({
+      useFactory: async (config: ConfigService) => ({
+        uri: process.env.MONGODB_CONNECTION,
+        keepAlive: true,
+      }),
+      inject: [ConfigService],
     }),
 
     TransactionLogModule,
