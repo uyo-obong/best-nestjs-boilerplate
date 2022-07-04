@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  citisquare_audit_trail_api:
+    container_name: citisquare_audit_trail_api
+    image: nestapp2:6
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "6000:6000"
+    env_file:
+      - .env
+    depends_on:
+      - audit_trail_mongodb
+    volumes:
+      - .:/usr/src/project
+      - /usr/src/project/node_modules
+
+
+  audit_trail_mongodb:
+    container_name: audit_trail_mongodb
+    image: mongo:latest
+
+    volumes:
+      - ./database:/data/db
+    expose:
+      - '27017'
+
+networks:
+  nesjs-network:
+    driver: bridge
